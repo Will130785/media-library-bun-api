@@ -37,14 +37,14 @@ export const mediaRouter = (fastify: FastifyInstance) => {
     getMediaItem
   )
   fastify.get(
-    '/get-all-media-items/:userId',
+    '/get-all-media-items',
     {
       preHandler: [getTokenFromHeaders, verifyToken, verifyUser],
     },
     getAllMediaItems
   )
   fastify.post(
-    '/add-media-item/:userId',
+    '/add-media-item',
     {
       preHandler: [getTokenFromHeaders, verifyToken, verifyUser],
       schema: mediaSchema,

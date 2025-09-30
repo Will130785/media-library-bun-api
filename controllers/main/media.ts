@@ -25,7 +25,7 @@ export const getAllMediaItems = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
-  const { userId } = request.params as unknown as { userId: string }
+  const userId = request.userId
   try {
     const mediaItems = await sql`SELECT * FROM media WHERE id = ${userId}`
     return reply.status(200).send({ success: true, mediaItems })
@@ -84,11 +84,9 @@ export const deleteMediaItem = async (
     return reply.status(200).send({ success: true })
   } catch (err) {
     console.log(`Error deleting item id ${id} - ${err}`)
-    return reply
-      .status(500)
-      .send({
-        success: false,
-        message: `Error deleting item id ${id} - ${err}`,
-      })
+    return reply.status(500).send({
+      success: false,
+      message: `Error deleting item id ${id} - ${err}`,
+    })
   }
 }
