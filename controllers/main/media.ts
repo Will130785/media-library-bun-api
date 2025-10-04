@@ -10,7 +10,7 @@ export const getMediaItem = async (
 ) => {
   const { id } = request.params as unknown as { id: string }
   try {
-    const mediaItem = await sql`SELECT * FROM media WHERE id = ${id}`
+    const mediaItem = await sql`SELECT * FROM media WHERE id = ${parseInt(id)}`
     return reply.status(200).send({ success: true, mediaItem: mediaItem[0] })
   } catch (err) {
     console.log(`Error getting media item id ${id} - ${err}`)
@@ -27,7 +27,8 @@ export const getAllMediaItems = async (
 ) => {
   const userId = request.userId
   try {
-    const mediaItems = await sql`SELECT * FROM media WHERE id = ${userId}`
+    const mediaItems = await sql`SELECT * FROM media WHERE userid = ${userId}`
+    console.log(mediaItems)
     return reply.status(200).send({ success: true, mediaItems })
   } catch (err) {
     console.log(`Error getting all media items for user ${userId} - ${err}`)
@@ -63,7 +64,7 @@ export const editMediaItem = async (
   const { id } = request.params as unknown as { id: string }
   const mediaItem = request.body as IMediaPayloadData
   try {
-    await sql`UPDATE media WHERE id = ${id} SET title = ${mediaItem.title}, mediatype = ${mediaItem.mediatype}, releasedate = ${mediaItem.releasedate}, barcode = ${mediaItem.barcode}, imageurl = ${mediaItem.imageurl}, notes = ${mediaItem.notes}`
+    await sql`UPDATE media SET title = ${mediaItem.title}, mediatype = ${mediaItem.mediatype}, releasedate = ${mediaItem.releasedate}, barcode = ${mediaItem.barcode}, imageurl = ${mediaItem.imageurl}, notes = ${mediaItem.notes} WHERE id = ${id}`
     return reply.status(200).send({ success: true })
   } catch (err) {
     console.log(`Error editing media item id ${id} - ${err}`)
