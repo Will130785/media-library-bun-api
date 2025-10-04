@@ -26,8 +26,10 @@ export const getAllMediaItems = async (
   reply: FastifyReply
 ) => {
   const userId = request.userId
+  const { mediaType } = request.params as { mediaType: string }
   try {
-    const mediaItems = await sql`SELECT * FROM media WHERE userid = ${userId}`
+    const mediaItems =
+      await sql`SELECT * FROM media WHERE userid = ${userId} AND mediatype = ${mediaType}`
     console.log(mediaItems)
     return reply.status(200).send({ success: true, mediaItems })
   } catch (err) {
@@ -46,7 +48,7 @@ export const addMediaItem = async (
   const mediaItem = request.body as IMediaPayloadData
   const userId = request.userId
   try {
-    await sql`INSERT INTO media (title, mediatype, releasedate, barcode, imageurl, notes, userid) VALUES (${mediaItem.title}, ${mediaItem.mediatype}, ${mediaItem.releasedate}, ${mediaItem.barcode}, ${mediaItem.imageurl}, ${mediaItem.notes}, ${userId})`
+    await sql`INSERT INTO media (title, mediatype, releasedate, barcode, imageurl, notes, userid, artist, director, recordlabel, filmstudio, developer, author, format) VALUES (${mediaItem.title}, ${mediaItem.mediatype}, ${mediaItem.releasedate}, ${mediaItem.barcode}, ${mediaItem.imageurl}, ${mediaItem.notes}, ${userId}, ${mediaItem.artist}, ${mediaItem.director}, ${mediaItem.recordLabel}, ${mediaItem.filmStudio}, ${mediaItem.developer}, ${mediaItem.author}, ${mediaItem.format})`
     return reply.status(201).send({ success: true })
   } catch (err) {
     console.log(`Error adding media item for user ${userId} - ${err}`)
@@ -64,7 +66,7 @@ export const editMediaItem = async (
   const { id } = request.params as unknown as { id: string }
   const mediaItem = request.body as IMediaPayloadData
   try {
-    await sql`UPDATE media SET title = ${mediaItem.title}, mediatype = ${mediaItem.mediatype}, releasedate = ${mediaItem.releasedate}, barcode = ${mediaItem.barcode}, imageurl = ${mediaItem.imageurl}, notes = ${mediaItem.notes} WHERE id = ${id}`
+    await sql`UPDATE media SET title = ${mediaItem.title}, mediatype = ${mediaItem.mediatype}, releasedate = ${mediaItem.releasedate}, barcode = ${mediaItem.barcode}, imageurl = ${mediaItem.imageurl}, notes = ${mediaItem.notes}, artist = ${mediaItem.artist}, director = ${mediaItem.director}, recordlabel = ${mediaItem.recordLabel}, filmstudio = ${mediaItem.filmStudio}, developer = ${mediaItem.developer}, author = ${mediaItem.author}, format = ${mediaItem.format} WHERE id = ${id}`
     return reply.status(200).send({ success: true })
   } catch (err) {
     console.log(`Error editing media item id ${id} - ${err}`)

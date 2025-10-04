@@ -37,7 +37,7 @@ export const mediaRouter = (fastify: FastifyInstance) => {
     getMediaItem
   )
   fastify.get(
-    '/get-all-media-items',
+    '/get-all-media-items/:mediaType',
     {
       preHandler: [getTokenFromHeaders, verifyToken, verifyUser],
     },
