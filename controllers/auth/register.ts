@@ -70,7 +70,7 @@ export const register = async (
 
   try {
     const insertResult =
-      await sql`INSERT INTO users (firstname, lastname, email, password) VALUES (${userRegistrationData.firstname}, ${userRegistrationData.lastname}, ${userRegistrationData.email}, ${userRegistrationData.password})`
+      await sql`INSERT INTO users (first_name, last_name, email, password) VALUES (${userRegistrationData.firstname}, ${userRegistrationData.lastname}, ${userRegistrationData.email}, ${userRegistrationData.password})`
     if (!insertResult) {
       return reply.status(400).send({ success: false })
     }
