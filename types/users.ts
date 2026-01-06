@@ -1,9 +1,9 @@
 export interface IRegisterUserData {
-  firstname: string
-  lastname: string
+  first_name: string
+  last_name: string
   email: string
   password: string
-  passwordConfirm: string
+  password_confirm: string
 }
 
 export interface ILoginUserData {

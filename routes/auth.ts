@@ -35,7 +35,7 @@ export const authRouter = (fastify: FastifyInstance) => {
     login
   )
   fastify.post(
-    '/register',
+    '/register-user',
     {
       preHandler: [
         checkCorrectRegistrationDataSupplied,

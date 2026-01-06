@@ -1,13 +1,19 @@
 export const registerSchema = {
   body: {
     type: 'object',
-    required: ['firstname', 'lastname', 'email', 'password', 'passwordConfirm'],
+    required: [
+      'first_name',
+      'last_name',
+      'email',
+      'password',
+      'password_confirm',
+    ],
     properties: {
-      firstname: { type: 'string' },
-      lastname: { type: 'string' },
+      first_name: { type: 'string' },
+      last_name: { type: 'string' },
       email: { type: 'string' },
       password: { type: 'string' },
-      passwordConfirm: { type: 'string' },
+      password_confirm: { type: 'string' },
     },
   },
 }

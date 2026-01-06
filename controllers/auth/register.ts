@@ -10,11 +10,11 @@ export const checkCorrectRegistrationDataSupplied = async (
 ) => {
   const userRegistrationData = request.body as unknown as IRegisterUserData
   if (
-    !userRegistrationData.firstname ||
-    !userRegistrationData.lastname ||
+    !userRegistrationData.first_name ||
+    !userRegistrationData.last_name ||
     !userRegistrationData.email ||
     !userRegistrationData.password ||
-    !userRegistrationData.passwordConfirm
+    !userRegistrationData.password_confirm
   ) {
     return reply
       .status(400)
@@ -70,7 +70,7 @@ export const register = async (
 
   try {
     const insertResult =
-      await sql`INSERT INTO users (first_name, last_name, email, password) VALUES (${userRegistrationData.firstname}, ${userRegistrationData.lastname}, ${userRegistrationData.email}, ${userRegistrationData.password})`
+      await sql`INSERT INTO users (first_name, last_name, email, password) VALUES (${userRegistrationData.first_name}, ${userRegistrationData.last_name}, ${userRegistrationData.email}, ${userRegistrationData.password})`
     if (!insertResult) {
       return reply.status(400).send({ success: false })
     }
