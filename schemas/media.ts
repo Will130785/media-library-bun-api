@@ -1,14 +1,17 @@
 export const mediaSchema = {
   body: {
     type: 'object',
-    required: ['title', 'mediatype', 'releasedate', 'barcode'],
+    required: ['title', 'type', 'release_date', 'barcode'],
     properties: {
       title: { type: 'string' },
-      mediatype: { type: 'string' },
-      releasedate: { type: 'string' },
+      type: { type: 'string' },
+      artist: { type: 'string' },
+      director: { type: 'string' },
+      label: { type: 'string' },
+      studio: { type: 'string' },
+      release_date: { type: 'string' },
       barcode: { type: 'string' },
-      imageurl: { type: 'string' },
-      notes: { type: 'string' },
+      cover_art_url: { type: 'string' },
     },
   },
 }

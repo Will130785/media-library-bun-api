@@ -1,15 +1,11 @@
 export interface IMediaPayloadData {
   title: string
-  mediatype: string
-  releasedate: string
-  barcode: string
   artist: string
   director: string
-  recordLabel: string
-  filmStudio: string
-  developer: string
-  author: string
-  format: string
-  imageurl: string
-  notes: string
+  type: 'cd' | 'vinyl' | 'bluray' | 'dvd'
+  release_date: string
+  label: string
+  studio: string
+  barcode: string
+  cover_art_url: string
 }

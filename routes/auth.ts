@@ -22,7 +22,7 @@ import { tokenVerified } from '../controllers/auth/validation'
 
 export const authRouter = (fastify: FastifyInstance) => {
   fastify.post(
-    '/login',
+    '/login-user',
     {
       preHandler: [
         checkCorrectLoginDataSupplied,

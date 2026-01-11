@@ -24,20 +24,20 @@ import {
   getMediaItem,
   getAllMediaItems,
   addMediaItem,
-  editMediaItem,
+  // editMediaItem,
   deleteMediaItem,
 } from '../controllers/main/media'
 
 export const mediaRouter = (fastify: FastifyInstance) => {
   fastify.get(
-    '/get-media-item/:id',
+    '/get-media-item/:id/:type',
     {
       preHandler: [getTokenFromHeaders, verifyToken, verifyUser],
     },
     getMediaItem
   )
   fastify.get(
-    '/get-all-media-items/:mediaType',
+    '/get-all-media-items/:type',
     {
       preHandler: [getTokenFromHeaders, verifyToken, verifyUser],
     },
@@ -51,14 +51,14 @@ export const mediaRouter = (fastify: FastifyInstance) => {
     },
     addMediaItem
   )
-  fastify.put(
-    '/edit-media-item/:id',
-    {
-      preHandler: [getTokenFromHeaders, verifyToken, verifyUser],
-      schema: mediaSchema,
-    },
-    editMediaItem
-  )
+  // fastify.put(
+  //   '/edit-media-item/:id',
+  //   {
+  //     preHandler: [getTokenFromHeaders, verifyToken, verifyUser],
+  //     schema: mediaSchema,
+  //   },
+  //   editMediaItem
+  // )
   fastify.delete(
     '/delete-media-item/:id',
     {
