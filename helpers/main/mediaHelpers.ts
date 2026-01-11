@@ -21,6 +21,25 @@ const addMediaItemSQLQuery = async (
   }
 }
 
+const editMediaItemSQLQuery = async (
+  mediaData: IMediaPayloadData,
+  id: string,
+  userId: string
+) => {
+  switch (mediaData.type) {
+    case 'cd':
+      return await sql`UPDATE music SET title = ${mediaData.title}, artist = ${mediaData.artist}, type = ${mediaData.type}, release_date = ${mediaData.release_date}, label = ${mediaData.label}, barcode = ${mediaData.barcode}, cover_art_url = ${mediaData.cover_art_url}, user_id = ${userId} WHERE id = ${id}`
+    case 'vinyl':
+      return await sql`UPDATE music SET title = ${mediaData.title}, artist = ${mediaData.artist}, type = ${mediaData.type}, release_date = ${mediaData.release_date}, label = ${mediaData.label}, barcode = ${mediaData.barcode}, cover_art_url = ${mediaData.cover_art_url}, user_id = ${userId} WHERE id = ${id} `
+    case 'bluray':
+      return await sql`UPDATE film SET title = ${mediaData.title}, director = ${mediaData.director}, type = ${mediaData.type}, release_date = ${mediaData.release_date}, studio = ${mediaData.studio}, barcode = ${mediaData.barcode}, cover_art_url = ${mediaData.cover_art_url}, user_id = ${userId} WHERE id = ${id} `
+    case 'dvd':
+      return await sql`UPDATE film SET title = ${mediaData.title}, director = ${mediaData.director}, type = ${mediaData.type}, release_date = ${mediaData.release_date}, studio = ${mediaData.studio}, barcode = ${mediaData.barcode}, cover_art_url = ${mediaData.cover_art_url}, user_id = ${userId} WHERE id = ${id} `
+    default:
+      return null
+  }
+}
+
 const getAllMediaItemsSQLQuery = async (type: string, userId: string) => {
   switch (type) {
     case 'cd':
@@ -51,8 +70,25 @@ const getMediaItemSQLQuery = async (type: string, id: string) => {
   }
 }
 
+const deleteMediaItemSQLQuery = async (type: string, id: string) => {
+  switch (type) {
+    case 'cd':
+      return await sql`DELETE FROM music WHERE id = ${id}`
+    case 'vinyl':
+      return await sql`DELETE FROM music WHERE id = ${id}}`
+    case 'bluray':
+      return await sql`DELETE FROM film WHERE id = ${id}`
+    case 'dvd':
+      return await sql`DELETE FROM film WHERE id = ${id}`
+    default:
+      return null
+  }
+}
+
 export default {
   addMediaItemSQLQuery,
   getAllMediaItemsSQLQuery,
   getMediaItemSQLQuery,
+  editMediaItemSQLQuery,
+  deleteMediaItemSQLQuery,
 }

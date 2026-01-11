@@ -68,31 +68,32 @@ export const addMediaItem = async (
   }
 }
 
-// export const editMediaItem = async (
-//   request: FastifyRequest,
-//   reply: FastifyReply
-// ) => {
-//   const { id } = request.params as unknown as { id: string }
-//   const mediaItem = request.body as IMediaPayloadData
-//   try {
-//     await sql`UPDATE media SET title = ${mediaItem.title}, mediatype = ${mediaItem.mediatype}, releasedate = ${mediaItem.releasedate}, barcode = ${mediaItem.barcode}, imageurl = ${mediaItem.imageurl}, notes = ${mediaItem.notes}, artist = ${mediaItem.artist}, director = ${mediaItem.director}, recordlabel = ${mediaItem.recordLabel}, filmstudio = ${mediaItem.filmStudio}, developer = ${mediaItem.developer}, author = ${mediaItem.author}, format = ${mediaItem.format} WHERE id = ${id}`
-//     return reply.status(200).send({ success: true })
-//   } catch (err) {
-//     console.log(`Error editing media item id ${id} - ${err}`)
-//     return reply.status(500).send({
-//       success: true,
-//       message: `Error editing media item id ${id} - ${err}`,
-//     })
-//   }
-// }
+export const editMediaItem = async (
+  request: FastifyRequest,
+  reply: FastifyReply
+) => {
+  const { id } = request.params as unknown as { id: string }
+  const mediaItem = request.body as IMediaPayloadData
+  const userId = request.userId
+  try {
+    await mediaHelpers.editMediaItemSQLQuery(mediaItem, id, userId as string)
+    return reply.status(200).send({ success: true })
+  } catch (err) {
+    console.log(`Error editing media item id ${id} - ${err}`)
+    return reply.status(500).send({
+      success: true,
+      message: `Error editing media item id ${id} - ${err}`,
+    })
+  }
+}
 
 export const deleteMediaItem = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
-  const { id } = request.params as unknown as { id: string }
+  const { id, type } = request.params as unknown as { id: string; type: string }
   try {
-    await sql`DELETE FROM media WHERE id = ${id}`
+    await mediaHelpers.deleteMediaItemSQLQuery(type, id)
     return reply.status(200).send({ success: true })
   } catch (err) {
     console.log(`Error deleting item id ${id} - ${err}`)
